@@ -62,6 +62,334 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-js设计模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/14/js设计模式/" class="article-date">
+  <time datetime="2018-05-14T15:25:11.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/14/js设计模式/">js设计模式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// eventProxy.js</span></span><br><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"><span class="keyword">const</span> eventProxy = &#123;</span><br><span class="line">  onObj: &#123;&#125;,</span><br><span class="line">  oneObj: &#123;&#125;,</span><br><span class="line">  on: <span class="function"><span class="keyword">function</span>(<span class="params">key, fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.onObj[key] === <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.onObj[key] = [];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.onObj[key].push(fn);</span><br><span class="line">  &#125;,</span><br><span class="line">  one: <span class="function"><span class="keyword">function</span>(<span class="params">key, fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.oneObj[key] === <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.oneObj[key] = [];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.oneObj[key].push(fn);</span><br><span class="line">  &#125;,</span><br><span class="line">  off: <span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.onObj[key] = [];</span><br><span class="line">    <span class="keyword">this</span>.oneObj[key] = [];</span><br><span class="line">  &#125;,</span><br><span class="line">  trigger: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> key, args;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">arguments</span>.length == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    key = <span class="built_in">arguments</span>[<span class="number">0</span>];</span><br><span class="line">    args = [].concat(<span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.onObj[key] !== <span class="literal">undefined</span></span><br><span class="line">      &amp;&amp; <span class="keyword">this</span>.onObj[key].length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> <span class="keyword">this</span>.onObj[key]) &#123;</span><br><span class="line">        <span class="keyword">this</span>.onObj[key][i].apply(<span class="literal">null</span>, args);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.oneObj[key] !== <span class="literal">undefined</span></span><br><span class="line">      &amp;&amp; <span class="keyword">this</span>.oneObj[key].length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> <span class="keyword">this</span>.oneObj[key]) &#123;</span><br><span class="line">        <span class="keyword">this</span>.oneObj[key][i].apply(<span class="literal">null</span>, args);</span><br><span class="line">        <span class="keyword">this</span>.oneObj[key][i] = <span class="literal">undefined</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">this</span>.oneObj[key] = [];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> eventProxy;</span><br><span class="line">eventProxy.on(<span class="string">"city"</span>,(data) =&gt; &#123;</span><br><span class="line">      <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">        city:data</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">eventProxy.trigger(<span class="string">"city"</span>,data)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/14/js设计模式/" data-id="cjh6ei4vn0001v0a3e3hrijgp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-思考总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/14/思考总结/" class="article-date">
+  <time datetime="2018-05-14T15:23:40.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/14/思考总结/">思考总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>HOC<br>immutable</p>
+<p>setState<br>PWA<br>SSR<br>性能优化<br>怎么让资源少</p>
+<h4 id="怎么让key唯一，可以用数组的下标吗"><a href="#怎么让key唯一，可以用数组的下标吗" class="headerlink" title="怎么让key唯一，可以用数组的下标吗"></a>怎么让key唯一，可以用数组的下标吗</h4><p>不能用数组下标，因为对应的键值都会改变，也就会出现我们上面提到的组件key值被改变就会被当作新创建的组件处理那种情况</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/14/思考总结/" data-id="cjh6ei4vs0002v0a3c3b5rdwa" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-http-http2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/14/http-http2/" class="article-date">
+  <time datetime="2018-05-14T14:50:30.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/14/http-http2/">http/http2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://user-images.githubusercontent.com/14144617/39578857-e51f2f4e-4f17-11e8-9264-c07f766950af.png" alt="image"></p>
+<p>http:<br><a href="https://hit-alibaba.github.io/interview/basic/network/HTTP.html" target="_blank" rel="noopener">https://hit-alibaba.github.io/interview/basic/network/HTTP.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/14/http-http2/" data-id="cjh6ei4vh0000v0a3fymva6u3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-读书笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/14/读书笔记/" class="article-date">
+  <time datetime="2018-05-14T14:49:13.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/14/读书笔记/">读书笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="《黑客与画家》"><a href="#《黑客与画家》" class="headerlink" title="《黑客与画家》"></a>《黑客与画家》</h3><p>要把编程当作自己的兴趣，创业的话有大公司收购的话就卖给大公司</p>
+<h3 id="《所谓情商高就是会说话》"><a href="#《所谓情商高就是会说话》" class="headerlink" title="《所谓情商高就是会说话》"></a>《所谓情商高就是会说话》</h3><p>1.不直接说出自己的想法<br>2.揣摩对方的心理<br>3.考虑符合对方利益的措辞</p>
+<p>待读书单：<br>《浪潮之巅》<br>《原则》<br>《别人成功卡在说话上》<br>《哥德尔，艾舍尔，巴赫》<br>《推荐系统实战》</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/14/读书笔记/" data-id="cjh6ei4w10006v0a3q8d2o0x0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-我来贷项目总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/14/我来贷项目总结/" class="article-date">
+  <time datetime="2018-05-14T14:48:36.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/14/我来贷项目总结/">我来贷项目总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>车险项目<br>banner轮播图: react-swipeable-views</p>
+<p>let authCounts = (auths.creditcard + auths.houseFundAuth + auths.shebaoAuth + auths.employeeProof).match(/0/g);判断有多少个值为0</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/14/我来贷项目总结/" data-id="cjh6ei4vu0003v0a3ao6e40xc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-京东面试" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/14/京东面试/" class="article-date">
+  <time datetime="2018-05-14T14:38:52.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/14/京东面试/">京东面试</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="浏览器输入url，到页面出来的过程"><a href="#浏览器输入url，到页面出来的过程" class="headerlink" title="浏览器输入url，到页面出来的过程"></a>浏览器输入url，到页面出来的过程</h4><p>1、首先，在浏览器地址栏中输入url<br>2、浏览器先查看浏览器缓存-系统缓存-路由器缓存，如果缓存中有，会直接在屏幕中显示页面内容。若没有，则跳到第三步操作。<br>3、在发送http请求前，需要域名解析(DNS解析)，解析获取相应的IP地址。<br>4、浏览器向服务器发起tcp连接，与浏览器建立tcp三次握手。<br>5、握手成功后，浏览器向服务器发送http请求，请求数据包。<br>6、服务器处理收到的请求，将数据返回至浏览器<br>7、浏览器收到HTTP响应<br>8、读取页面内容，浏览器渲染，解析html源码<br>9、生成Dom树、解析css样式、js交互<br>10、客户端和服务器交互<br>11、ajax查询</p>
+<h4 id="长连接和短连接，http缓存一天，服务器怎么设置"><a href="#长连接和短连接，http缓存一天，服务器怎么设置" class="headerlink" title="长连接和短连接，http缓存一天，服务器怎么设置"></a>长连接和短连接，http缓存一天，服务器怎么设置</h4><h4 id="html5的新特性"><a href="#html5的新特性" class="headerlink" title="html5的新特性"></a>html5的新特性</h4><h4 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化***"></a>性能优化***</h4><h4 id="arguments是严格意义上的数组吗"><a href="#arguments是严格意义上的数组吗" class="headerlink" title="arguments是严格意义上的数组吗"></a>arguments是严格意义上的数组吗</h4><p>arguments虽然拥有一个length属性，但它缺少所有的数组方法,还有一个callee属性，该属性是一个指针，指向拥有这个arguments对象的函数</p>
+<h4 id="vue的data数据中心定义一个对象数组，然后在触发事件时给它添加或修改属性的时候，页面中的视图不会同步更新"><a href="#vue的data数据中心定义一个对象数组，然后在触发事件时给它添加或修改属性的时候，页面中的视图不会同步更新" class="headerlink" title="vue的data数据中心定义一个对象数组，然后在触发事件时给它添加或修改属性的时候，页面中的视图不会同步更新?"></a>vue的data数据中心定义一个对象数组，然后在触发事件时给它添加或修改属性的时候，页面中的视图不会同步更新?</h4><p>方案一：利用Vue.set(object,key,val)<br>例：Vue.set(vm.obj,’k1’,’v1’)<br>方案二：利用this.$set(this.obj,key,val)<br>例：this.$set(this.obj,’k1’,’v1’)<br>方案三：利用Object.assign({}，this.obj)创建新对象<br>例：<br>                    this.obj.k1=’v1’；<br>                    this.obj = Object.assign({}, this.obj)<br>                或<br>                    this.obj = Object.assign({}, this.obj,{‘k1’,’v1’})k y</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/14/京东面试/" data-id="cjh6ei4vv0004v0a3dd8nmgri" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-阿里巴巴面试" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/14/阿里巴巴面试/" class="article-date">
+  <time datetime="2018-05-14T14:25:39.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/14/阿里巴巴面试/">阿里巴巴面试</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="MVC跟MVVM比较"><a href="#MVC跟MVVM比较" class="headerlink" title="MVC跟MVVM比较"></a>MVC跟MVVM比较</h3><p>MVC Model View Controller<br>单向通信<br>MVVM Model View ViewModel<br>双向数据<br>View的变动，自动反映在 ViewModel</p>
+<h3 id="讲一下工作经历"><a href="#讲一下工作经历" class="headerlink" title="讲一下工作经历"></a>讲一下工作经历</h3><h3 id="vue的keep-alive指令"><a href="#vue的keep-alive指令" class="headerlink" title="vue的keep-alive指令"></a>vue的keep-alive指令</h3><p>使组件保存在内存中<br>如果把切换出去的组件保留在内存中，可以保留它的状态或避免重新渲染。</p>
+<h3 id="vue的v-show跟v-if的区别"><a href="#vue的v-show跟v-if的区别" class="headerlink" title="vue的v-show跟v-if的区别"></a>vue的v-show跟v-if的区别</h3><p>v-if 会隐藏标签，v-show标签在，只是控制样式的显示</p>
+<h3 id="vue的样式只对当前页面有效怎么弄"><a href="#vue的样式只对当前页面有效怎么弄" class="headerlink" title="vue的样式只对当前页面有效怎么弄"></a>vue的样式只对当前页面有效怎么弄</h3><p>scoped</p>
+<h3 id="React执行setState之后的操作"><a href="#React执行setState之后的操作" class="headerlink" title="React执行setState之后的操作"></a>React执行setState之后的操作</h3><p>React 会将传入的参数对象与组件当前的状态合并，然后触发所谓的调和过程（Reconciliation）。经过调和过程，React 会以相对高效的方式根据新的状态构建 React 元素树并且着手重新渲染整个UI界面。在 React 得到元素树之后，React 会自动计算出新的树与老树的节点差异，然后根据差异对界面进行最小化重渲染。在差异计算算法中，React 能够相对精确地知道哪些位置发生了改变以及应该如何改变，这就保证了按需更新，而不是全部重新渲染。</p>
+<h3 id="jsonp的原理"><a href="#jsonp的原理" class="headerlink" title="jsonp的原理"></a>jsonp的原理</h3><p>用什么实现的，<script src=""></p>
+<h3 id="cors的原理"><a href="#cors的原理" class="headerlink" title="cors的原理"></a>cors的原理</h3><p>cors通过那个header的哪个字段来判断</p>
+<blockquote>
+<p>Access-Control-Allow-Origin: <a href="http://foo.example">http://foo.example</a>  // 子域乃至整个域名或所有域名是否允许访问<br>Access-Control-Allow-Methods: POST, GET, OPTIONS // 允许那些行为方法<br>Access-Control-Allow-Headers: X-PINGOTHER, Content-Type  // 允许的头部字段<br>Access-Control-Max-Age: 86400  // 有效期</p>
+</blockquote>
+<h4 id="app端怎么做适配的，dpr是什么，在做h5的时候有碰到什么兼容性的问题，1px在不同设备上面是怎么显示的"><a href="#app端怎么做适配的，dpr是什么，在做h5的时候有碰到什么兼容性的问题，1px在不同设备上面是怎么显示的" class="headerlink" title="app端怎么做适配的，dpr是什么，在做h5的时候有碰到什么兼容性的问题，1px在不同设备上面是怎么显示的"></a>app端怎么做适配的，dpr是什么，在做h5的时候有碰到什么兼容性的问题，1px在不同设备上面是怎么显示的</h4><p>引入flexiable.js</p>
+<h4 id="react-的路由"><a href="#react-的路由" class="headerlink" title="react 的路由"></a>react 的路由</h4><p>hash路由的原理</p>
+<p>怎么做到没有#<br>BrowserRouter</p>
+<p>hash路由有什么问题</p>
+<h4 id="mvc跟mvvm的区别"><a href="#mvc跟mvvm的区别" class="headerlink" title="mvc跟mvvm的区别"></a>mvc跟mvvm的区别</h4><h4 id="angular跟react的区别"><a href="#angular跟react的区别" class="headerlink" title="angular跟react的区别"></a>angular跟react的区别</h4><h4 id="有没有自己做一套组件库，为什么没有"><a href="#有没有自己做一套组件库，为什么没有" class="headerlink" title="有没有自己做一套组件库，为什么没有"></a>有没有自己做一套组件库，为什么没有</h4><h4 id="v-model的实现原理"><a href="#v-model的实现原理" class="headerlink" title="v-model的实现原理"></a>v-model的实现原理</h4><p>object.defintProperty()</p>
+<p>getter,setter</p>
+<h4 id="node-js-熟不熟"><a href="#node-js-熟不熟" class="headerlink" title="node.js 熟不熟"></a>node.js 熟不熟</h4><h4 id="解决跨域有哪些方法"><a href="#解决跨域有哪些方法" class="headerlink" title="解决跨域有哪些方法"></a>解决跨域有哪些方法</h4><p>jsonp,cors,comet</p>
+<h4 id="做数据可视化有没有做组件封装，有遇到什么问题"><a href="#做数据可视化有没有做组件封装，有遇到什么问题" class="headerlink" title="做数据可视化有没有做组件封装，有遇到什么问题"></a>做数据可视化有没有做组件封装，有遇到什么问题</h4><h4 id="说一下自己的特长"><a href="#说一下自己的特长" class="headerlink" title="说一下自己的特长"></a>说一下自己的特长</h4><h4 id="对自己未来的规划"><a href="#对自己未来的规划" class="headerlink" title="对自己未来的规划"></a>对自己未来的规划</h4><h4 id="vuex，为什么要用状态管理"><a href="#vuex，为什么要用状态管理" class="headerlink" title="vuex，为什么要用状态管理"></a>vuex，为什么要用状态管理</h4><h4 id="webpack打包有遇到什么问题"><a href="#webpack打包有遇到什么问题" class="headerlink" title="webpack打包有遇到什么问题"></a>webpack打包有遇到什么问题</h4><blockquote>
+<p>热加载会很慢，因为devtool用的source-map,改为eval-source-map之后就变快了</p>
+</blockquote>
+</script></p>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/14/阿里巴巴面试/" data-id="cjh6ei4w30008v0a3kjp2bdry" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-性能优化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/14/性能优化/" class="article-date">
+  <time datetime="2018-05-14T14:17:36.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/14/性能优化/">性能优化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="监控性能"><a href="#监控性能" class="headerlink" title="监控性能"></a>监控性能</h3><p>window.performance</p>
+<p>DNS解析时间： domainLookupEnd - domainLookupStart<br>TCP建立连接时间： connectEnd - connectStart<br>白屏时间： responseStart - navigationStart<br>dom渲染完成时间： domContentLoadedEventEnd - navigationStart<br>页面onload时间： loadEventEnd - navigationStart</p>
+<p><a href="http://www.alloyteam.com/2015/09/explore-performance/" target="_blank" rel="noopener">http://www.alloyteam.com/2015/09/explore-performance/</a></p>
+<h3 id="React-性能优化"><a href="#React-性能优化" class="headerlink" title="React 性能优化"></a>React 性能优化</h3><p><a href="https://doc.react-china.org/docs/optimizing-performance.html" target="_blank" rel="noopener">https://doc.react-china.org/docs/optimizing-performance.html</a></p>
+<p>1.webpack 压缩代码  webpack.optimize.UglifyJsPlugin<br>2.shouldComponentUpdate(nextProps, nextState),pureComponent<br>3.Immutable.js<br>4.dll打包，webpack.DllReferencePlugin<br>将静态资源文件（运行依赖包）与源文件分开打包，先使用DllPlugin给静态资源打包，再使用DllReferencePlugin让源文件引用资源文件。<br>5.react-loadable  <a href="https://reacttraining.com/react-router/web/guides/code-splitting" target="_blank" rel="noopener">https://reacttraining.com/react-router/web/guides/code-splitting</a></p>
+<h3 id="vue性能优化"><a href="#vue性能优化" class="headerlink" title="vue性能优化"></a>vue性能优化</h3><p><a href="https://www.jianshu.com/p/40b04701c571" target="_blank" rel="noopener">https://www.jianshu.com/p/40b04701c571</a></p>
+<p>keep-alive，dll打包，ngnix gzip压缩及缓存<br>路由使用异步组件<br>component: (resolve) =&gt; require([./app/dss], resolve)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/14/性能优化/" data-id="cjh6ei4w00005v0a369mcamhm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-腾讯前端面试" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/05/13/腾讯前端面试/" class="article-date">
@@ -90,56 +418,22 @@
 <h3 id="4-安全"><a href="#4-安全" class="headerlink" title="4.安全"></a>4.安全</h3><p>运营商劫持，xss，csrf</p>
 <p>运营商是怎么的劫持，xss是怎么做的</p>
 <h3 id="5-react跟vue的不同"><a href="#5-react跟vue的不同" class="headerlink" title="5.react跟vue的不同"></a>5.react跟vue的不同</h3><h3 id="6-无限DOM操作，怎么优化"><a href="#6-无限DOM操作，怎么优化" class="headerlink" title="6.无限DOM操作，怎么优化"></a>6.无限DOM操作，怎么优化</h3><p>有一个网站有很多张图片，不断上拉的时候图片加载</p>
-<h3 id="7-原型"><a href="#7-原型" class="headerlink" title="7.原型"></a>7.原型</h3>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/13/腾讯前端面试/" data-id="cjh4yhdja0000zia3j3b3nbnh" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/24/hello-world/" class="article-date">
-  <time datetime="2018-04-24T13:49:56.145Z" itemprop="datePublished">2018-04-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/24/hello-world/">Rachel</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="我来贷闪电贷"><a href="#我来贷闪电贷" class="headerlink" title="我来贷闪电贷"></a>我来贷闪电贷</h2><p><img src="page1.png" alt="image"></p>
-<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<h3 id="7-原型"><a href="#7-原型" class="headerlink" title="7.原型"></a>7.原型</h3><h2 id="腾讯qq音乐"><a href="#腾讯qq音乐" class="headerlink" title="腾讯qq音乐"></a>腾讯qq音乐</h2><h3 id="CDN怎么做缓存的"><a href="#CDN怎么做缓存的" class="headerlink" title="CDN怎么做缓存的"></a>CDN怎么做缓存的</h3><p>expires, cache-control:max-age=xxx, last-modified, etag</p>
+<p><a href="http://bbs.qcloud.com/thread-3775-1-1.html" target="_blank" rel="noopener">http://bbs.qcloud.com/thread-3775-1-1.html</a><br><a href="https://blog.csdn.net/guozhiyingguo/article/details/53113860" target="_blank" rel="noopener">https://blog.csdn.net/guozhiyingguo/article/details/53113860</a><br>CDN边缘节点缓存策略因服务商不同而不同，但一般都会遵循http标准协议，通过http响应头中的Cache-control: max-age的字段来设置CDN边缘节点数据缓存时间。</p>
+<p>If-Modified-Since，和 Last-Modified 一样都是用于记录页面最后修改时间的 HTTP 头信息，只是 Last-Modified 是由服务器往客户端发送的 HTTP 头，而 If-Modified-Since 则是由客户端往服务器发送的头，可 以看到，再次请求本地存在的 cache 页面时，客户端会通过 If-Modified-Since 头将先前服务器端发过来的 Last-Modified 最后修改时间戳发送回去，这是为了让服务器端进行验证，通过这个时间戳判断客户端的页面是否是最新的，如果不是最新的，则返回新的内容，如果是最新的，则 返回 304 告诉客户端其本地 cache 的页面是最新的，于是客户端就可以直接从本地加载页面了，这样在网络上传输的数据就会大大减少，同时也减轻了服务器的负担。</p>
+<p>ETags和If-None-Match的工作原理是在HTTP Response中添加ETags信息。当客户端再次请求该资源时，将在HTTP Request中加入If-None-Match信息（ETags的值）。如果服务器验证资源的ETags没有改变（该资源没有改变），将返回一个304状态；否则，服务器将返回200状态，并返回该资源和新的ETags。</p>
+<h3 id="React或者Vue有什么性能方面的问题"><a href="#React或者Vue有什么性能方面的问题" class="headerlink" title="React或者Vue有什么性能方面的问题"></a>React或者Vue有什么性能方面的问题</h3><h3 id="React或者Vue怎么做性能优化的"><a href="#React或者Vue怎么做性能优化的" class="headerlink" title="React或者Vue怎么做性能优化的"></a>React或者Vue怎么做性能优化的</h3><h3 id="首屏加载速度"><a href="#首屏加载速度" class="headerlink" title="首屏加载速度"></a>首屏加载速度</h3><p>Chrome network 屏幕截图工具<br>用performance.timing</p>
+<h3 id="为什么要用base64"><a href="#为什么要用base64" class="headerlink" title="为什么要用base64"></a>为什么要用base64</h3><p>减少http请求</p>
+<h3 id="有没有遇到过运营商劫持，怎么做的"><a href="#有没有遇到过运营商劫持，怎么做的" class="headerlink" title="有没有遇到过运营商劫持，怎么做的"></a>有没有遇到过运营商劫持，怎么做的</h3><p>全网https</p>
+<h3 id="有没有做过错误上报日志，有没有性能检测工具"><a href="#有没有做过错误上报日志，有没有性能检测工具" class="headerlink" title="有没有做过错误上报日志，有没有性能检测工具"></a>有没有做过错误上报日志，有没有性能检测工具</h3><p>chrome 的performance<br>可以在服务器上面建一个页面，专门做错误上报的</p>
+<h3 id="js加载不出来怎么办"><a href="#js加载不出来怎么办" class="headerlink" title="js加载不出来怎么办"></a>js加载不出来怎么办</h3><h3 id="做授权页面怎么保证安全的"><a href="#做授权页面怎么保证安全的" class="headerlink" title="做授权页面怎么保证安全的"></a>做授权页面怎么保证安全的</h3><p>有专门的风控部门做对接的</p>
+<h3 id="怎么保证页面有没有出错"><a href="#怎么保证页面有没有出错" class="headerlink" title="怎么保证页面有没有出错"></a>怎么保证页面有没有出错</h3><p>try catch</p>
+<h3 id="页面报错怎么去调试的"><a href="#页面报错怎么去调试的" class="headerlink" title="页面报错怎么去调试的"></a>页面报错怎么去调试的</h3><p>打断点</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/24/hello-world/" data-id="cjh4yhdjf0001zia3fjl2inwp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/13/腾讯前端面试/" data-id="cjh6ei4w20007v0a3acqvklte" class="article-share-link">Share</a>
       
       
     </footer>
@@ -167,7 +461,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li></ul>
     </div>
   </div>
 
@@ -180,11 +474,23 @@
       <ul>
         
           <li>
-            <a href="/2018/05/13/腾讯前端面试/">腾讯前端面试</a>
+            <a href="/2018/05/14/js设计模式/">js设计模式</a>
           </li>
         
           <li>
-            <a href="/2018/04/24/hello-world/">Rachel</a>
+            <a href="/2018/05/14/思考总结/">思考总结</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/http-http2/">http/http2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/读书笔记/">读书笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/我来贷项目总结/">我来贷项目总结</a>
           </li>
         
       </ul>

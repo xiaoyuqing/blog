@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>性能优化 | Rachel肖宇晴</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="监控性能window.performance DNS解析时间： domainLookupEnd - domainLookupStartTCP建立连接时间： connectEnd - connectStart白屏时间： responseStart - navigationStartdom渲染完成时间： domContentLoadedEventEnd - navigationStart页面onloa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能优化">
+<meta property="og:url" content="http://yoursite.com/2018/05/14/性能优化/index.html">
+<meta property="og:site_name" content="Rachel肖宇晴">
+<meta property="og:description" content="监控性能window.performance DNS解析时间： domainLookupEnd - domainLookupStartTCP建立连接时间： connectEnd - connectStart白屏时间： responseStart - navigationStartdom渲染完成时间： domContentLoadedEventEnd - navigationStart页面onloa">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-14T14:18:29.395Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="性能优化">
+<meta name="twitter:description" content="监控性能window.performance DNS解析时间： domainLookupEnd - domainLookupStartTCP建立连接时间： connectEnd - connectStart白屏时间： responseStart - navigationStartdom渲染完成时间： domContentLoadedEventEnd - navigationStart页面onloa">
+  
+    <link rel="alternate" href="/atom.xml" title="Rachel肖宇晴" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Rachel肖宇晴</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-性能优化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/14/性能优化/" class="article-date">
+  <time datetime="2018-05-14T14:17:36.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      性能优化
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="监控性能"><a href="#监控性能" class="headerlink" title="监控性能"></a>监控性能</h3><p>window.performance</p>
+<p>DNS解析时间： domainLookupEnd - domainLookupStart<br>TCP建立连接时间： connectEnd - connectStart<br>白屏时间： responseStart - navigationStart<br>dom渲染完成时间： domContentLoadedEventEnd - navigationStart<br>页面onload时间： loadEventEnd - navigationStart</p>
+<p><a href="http://www.alloyteam.com/2015/09/explore-performance/" target="_blank" rel="noopener">http://www.alloyteam.com/2015/09/explore-performance/</a></p>
+<h3 id="React-性能优化"><a href="#React-性能优化" class="headerlink" title="React 性能优化"></a>React 性能优化</h3><p><a href="https://doc.react-china.org/docs/optimizing-performance.html" target="_blank" rel="noopener">https://doc.react-china.org/docs/optimizing-performance.html</a></p>
+<p>1.webpack 压缩代码  webpack.optimize.UglifyJsPlugin<br>2.shouldComponentUpdate(nextProps, nextState),pureComponent<br>3.Immutable.js<br>4.dll打包，webpack.DllReferencePlugin<br>将静态资源文件（运行依赖包）与源文件分开打包，先使用DllPlugin给静态资源打包，再使用DllReferencePlugin让源文件引用资源文件。<br>5.react-loadable  <a href="https://reacttraining.com/react-router/web/guides/code-splitting" target="_blank" rel="noopener">https://reacttraining.com/react-router/web/guides/code-splitting</a></p>
+<h3 id="vue性能优化"><a href="#vue性能优化" class="headerlink" title="vue性能优化"></a>vue性能优化</h3><p><a href="https://www.jianshu.com/p/40b04701c571" target="_blank" rel="noopener">https://www.jianshu.com/p/40b04701c571</a></p>
+<p>keep-alive，dll打包，ngnix gzip压缩及缓存<br>路由使用异步组件<br>component: (resolve) =&gt; require([./app/dss], resolve)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/14/性能优化/" data-id="cjh6ei4w00005v0a369mcamhm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/05/14/阿里巴巴面试/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          阿里巴巴面试
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/13/腾讯前端面试/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">腾讯前端面试</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/05/14/js设计模式/">js设计模式</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/思考总结/">思考总结</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/http-http2/">http/http2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/读书笔记/">读书笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/我来贷项目总结/">我来贷项目总结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 xiaoyuqing<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

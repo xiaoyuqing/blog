@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Rachel肖宇晴">
 <meta property="og:description" content="腾讯文档电话面试1.讲一下http协议状态码 200，301，302，304 2.CDN缓存https://www.cnblogs.com/wonyun/p/5524617.html 3.跨域jsonp,cors,comet,web socket 4.安全运营商劫持，xss，csrf 运营商是怎么的劫持，xss是怎么做的 5.react跟vue的不同6.无限DOM操作，怎么优化有一个网站有很多张图">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-13T14:45:36.556Z">
+<meta property="og:updated_time" content="2018-05-14T15:18:50.227Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="腾讯前端面试">
 <meta name="twitter:description" content="腾讯文档电话面试1.讲一下http协议状态码 200，301，302，304 2.CDN缓存https://www.cnblogs.com/wonyun/p/5524617.html 3.跨域jsonp,cors,comet,web socket 4.安全运营商劫持，xss，csrf 运营商是怎么的劫持，xss是怎么做的 5.react跟vue的不同6.无限DOM操作，怎么优化有一个网站有很多张图">
@@ -92,11 +92,22 @@
 <h3 id="4-安全"><a href="#4-安全" class="headerlink" title="4.安全"></a>4.安全</h3><p>运营商劫持，xss，csrf</p>
 <p>运营商是怎么的劫持，xss是怎么做的</p>
 <h3 id="5-react跟vue的不同"><a href="#5-react跟vue的不同" class="headerlink" title="5.react跟vue的不同"></a>5.react跟vue的不同</h3><h3 id="6-无限DOM操作，怎么优化"><a href="#6-无限DOM操作，怎么优化" class="headerlink" title="6.无限DOM操作，怎么优化"></a>6.无限DOM操作，怎么优化</h3><p>有一个网站有很多张图片，不断上拉的时候图片加载</p>
-<h3 id="7-原型"><a href="#7-原型" class="headerlink" title="7.原型"></a>7.原型</h3>
+<h3 id="7-原型"><a href="#7-原型" class="headerlink" title="7.原型"></a>7.原型</h3><h2 id="腾讯qq音乐"><a href="#腾讯qq音乐" class="headerlink" title="腾讯qq音乐"></a>腾讯qq音乐</h2><h3 id="CDN怎么做缓存的"><a href="#CDN怎么做缓存的" class="headerlink" title="CDN怎么做缓存的"></a>CDN怎么做缓存的</h3><p>expires, cache-control:max-age=xxx, last-modified, etag</p>
+<p><a href="http://bbs.qcloud.com/thread-3775-1-1.html" target="_blank" rel="noopener">http://bbs.qcloud.com/thread-3775-1-1.html</a><br><a href="https://blog.csdn.net/guozhiyingguo/article/details/53113860" target="_blank" rel="noopener">https://blog.csdn.net/guozhiyingguo/article/details/53113860</a><br>CDN边缘节点缓存策略因服务商不同而不同，但一般都会遵循http标准协议，通过http响应头中的Cache-control: max-age的字段来设置CDN边缘节点数据缓存时间。</p>
+<p>If-Modified-Since，和 Last-Modified 一样都是用于记录页面最后修改时间的 HTTP 头信息，只是 Last-Modified 是由服务器往客户端发送的 HTTP 头，而 If-Modified-Since 则是由客户端往服务器发送的头，可 以看到，再次请求本地存在的 cache 页面时，客户端会通过 If-Modified-Since 头将先前服务器端发过来的 Last-Modified 最后修改时间戳发送回去，这是为了让服务器端进行验证，通过这个时间戳判断客户端的页面是否是最新的，如果不是最新的，则返回新的内容，如果是最新的，则 返回 304 告诉客户端其本地 cache 的页面是最新的，于是客户端就可以直接从本地加载页面了，这样在网络上传输的数据就会大大减少，同时也减轻了服务器的负担。</p>
+<p>ETags和If-None-Match的工作原理是在HTTP Response中添加ETags信息。当客户端再次请求该资源时，将在HTTP Request中加入If-None-Match信息（ETags的值）。如果服务器验证资源的ETags没有改变（该资源没有改变），将返回一个304状态；否则，服务器将返回200状态，并返回该资源和新的ETags。</p>
+<h3 id="React或者Vue有什么性能方面的问题"><a href="#React或者Vue有什么性能方面的问题" class="headerlink" title="React或者Vue有什么性能方面的问题"></a>React或者Vue有什么性能方面的问题</h3><h3 id="React或者Vue怎么做性能优化的"><a href="#React或者Vue怎么做性能优化的" class="headerlink" title="React或者Vue怎么做性能优化的"></a>React或者Vue怎么做性能优化的</h3><h3 id="首屏加载速度"><a href="#首屏加载速度" class="headerlink" title="首屏加载速度"></a>首屏加载速度</h3><p>Chrome network 屏幕截图工具<br>用performance.timing</p>
+<h3 id="为什么要用base64"><a href="#为什么要用base64" class="headerlink" title="为什么要用base64"></a>为什么要用base64</h3><p>减少http请求</p>
+<h3 id="有没有遇到过运营商劫持，怎么做的"><a href="#有没有遇到过运营商劫持，怎么做的" class="headerlink" title="有没有遇到过运营商劫持，怎么做的"></a>有没有遇到过运营商劫持，怎么做的</h3><p>全网https</p>
+<h3 id="有没有做过错误上报日志，有没有性能检测工具"><a href="#有没有做过错误上报日志，有没有性能检测工具" class="headerlink" title="有没有做过错误上报日志，有没有性能检测工具"></a>有没有做过错误上报日志，有没有性能检测工具</h3><p>chrome 的performance<br>可以在服务器上面建一个页面，专门做错误上报的</p>
+<h3 id="js加载不出来怎么办"><a href="#js加载不出来怎么办" class="headerlink" title="js加载不出来怎么办"></a>js加载不出来怎么办</h3><h3 id="做授权页面怎么保证安全的"><a href="#做授权页面怎么保证安全的" class="headerlink" title="做授权页面怎么保证安全的"></a>做授权页面怎么保证安全的</h3><p>有专门的风控部门做对接的</p>
+<h3 id="怎么保证页面有没有出错"><a href="#怎么保证页面有没有出错" class="headerlink" title="怎么保证页面有没有出错"></a>怎么保证页面有没有出错</h3><p>try catch</p>
+<h3 id="页面报错怎么去调试的"><a href="#页面报错怎么去调试的" class="headerlink" title="页面报错怎么去调试的"></a>页面报错怎么去调试的</h3><p>打断点</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/13/腾讯前端面试/" data-id="cjh4yhdja0000zia3j3b3nbnh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/05/13/腾讯前端面试/" data-id="cjh6ei4w20007v0a3acqvklte" class="article-share-link">Share</a>
       
       
     </footer>
@@ -105,11 +116,15 @@
     
 <nav id="article-nav">
   
-  
-    <a href="/2018/04/24/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Rachel</div>
+    <a href="/2018/05/14/性能优化/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          性能优化
+        
+      </div>
     </a>
+  
   
 </nav>
 
@@ -132,7 +147,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li></ul>
     </div>
   </div>
 
@@ -145,11 +160,23 @@
       <ul>
         
           <li>
-            <a href="/2018/05/13/腾讯前端面试/">腾讯前端面试</a>
+            <a href="/2018/05/14/js设计模式/">js设计模式</a>
           </li>
         
           <li>
-            <a href="/2018/04/24/hello-world/">Rachel</a>
+            <a href="/2018/05/14/思考总结/">思考总结</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/http-http2/">http/http2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/读书笔记/">读书笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/14/我来贷项目总结/">我来贷项目总结</a>
           </li>
         
       </ul>
