@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Rachel肖宇晴
+title: Rachel
 subtitle:
-description: 肖宇晴的个人博客
+description:
 keywords:
-author: xiaoyuqing
-language:
+author: Rachel
+language: zh-CN
 timezone:
 
 # URL
@@ -35,7 +35,7 @@ titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
-post_asset_folder: true
+post_asset_folder: false
 relative_link: false
 future: true
 highlight:
@@ -73,11 +73,46 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: material
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
-deploy: 
+deploy:
   type: git
-  repo: https://github.com/xiaoyuqing/xiaoyuqing.github.io.git
+  repo: https://github.com/xiaoyuqing/xiaoyuqing.github.io
   branch: master
+
+# RSS
+feed:
+type: atom
+path: atom.xml
+limit: 20
+# sitemap
+# 提交给谷歌搜素引擎，SEO优化开启配置是一样的
+sitemap:
+    path: sitemap.xml
+# 提交百度搜索引擎   
+baidusitemap:
+    path: baidusitemap.xml 
+# HTML压缩
+html_minifier:
+  exclude:     
+# css压缩
+clean_css:
+  exclude: 
+	- '*.min.css'
+# js压缩   
+uglify:
+  mangle: true
+  output:
+  compress:
+  exclude: 
+	- '*.min.js'
+# image压缩    
+imagemin:
+  enable     : true
+  interlaced : false
+  multipass  : false
+  optimizationLevel: 2
+  pngquant   : false
+  progressive: false

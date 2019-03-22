@@ -5,3 +5,7 @@ node_modules
 # MAC
 .DS_Store
 package-lock.json
+
+/.deploy_git
+/public  
+/_config.yml
